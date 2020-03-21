@@ -1,0 +1,69 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.Game {
+  height: 100vh;
+  width: 100%;
+  background-color: rgb(98, 163, 163);
+}
+.board {
+  display: flex;
+  justify-content: center;
+}
+.header {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  background-color: rgba(3, 3, 3, 0.849);
+  font-size: 25px;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid rgba(3, 3, 3, 0.294);
+}
+.header p {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  color: white;
+}
+.circles {
+  width: 50px;
+  height: 50px;
+}
+.targeticon {
+  color: rgb(192, 41, 41);
+  margin-left: 10px;
+}
+canvas {
+  margin-top: 20px;
+  background-color: rgb(143, 141, 141);
+}
+
+button {
+  height: 40px;
+  width: 240px;
+}
+.circle {
+  width: 20px;
+  height: 20px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.home-icons {
+  display: flex;
+  width: 100%;
+  color: rgb(151, 146, 146);
+  justify-content: flex-end;
+  margin-right: 40px;
+}
+
+.stats {
+  margin-right: 15px;
+}
+.text-holder {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
