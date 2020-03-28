@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import Homepage from "./Homepage";
 import "./Game.css";
 import Header from "./Header";
 import _ from "lodash";
-import targetPic from "./Images/targetpic.png";
 
-let id = 0;
-let gameTime = 5;
+let gameTime = 10;
 
 export default function App() {
   const [playing, inSession] = useState(false);
   const [targets, setTargets] = useState([]);
-  const [date, setDate] = useState();
   const [seconds, setSeconds] = useState(gameTime);
   const [hits, setHits] = useState(0);
   const [endGame, setEndgame] = useState(false);
@@ -22,9 +18,12 @@ export default function App() {
   let timer = seconds;
   const hitsCounter = hits;
   const missesCounter = misses;
-  const totalCounter = hitsCounter + missesCounter;
 
   const accuracy = (hitsCounter / (missesCounter + hitsCounter)) * 100;
+
+  // const lowDif = 750;
+  // const medDif = 500;
+  // const hardDif = 250;
 
   const startGame = () => {
     setSeconds(gameTime);
@@ -35,44 +34,52 @@ export default function App() {
     inSession(true);
     const gameTimer = setInterval(() => {
       let nextId = zeroId++;
-      const targStyle = {
-        position: "absolute",
-        top: Math.floor(
-          Math.random() * (containerRef.current.clientHeight - 200) + 100
-        ),
-        left: Math.floor(
-          Math.random() * (containerRef.current.clientWidth - 200) + 100
-        ),
-        backgroundColor: "rgb(190, 39, 39)"
-      };
-      setTargets(prevState => [
-        ...prevState,
-        {
-          target: "target" + nextId,
-          targStyle: targStyle,
-          targPic: targetPic,
-          id: nextId,
-          hit: false
-        }
-      ]);
-
+      let stop = false;
       setSeconds(secs => {
-        if (secs === 0) clearInterval(gameTimer);
-
+        if (secs === 0) {
+          clearInterval(gameTimer);
+          stop = true;
+        }
         return secs;
       });
-    }, 500);
+      if (!stop) {
+        const targStyle = {
+          position: "absolute",
+          top: Math.floor(
+            Math.random() * (containerRef.current.clientHeight - 200) + 100
+          ),
+          left: Math.floor(
+            Math.random() * (containerRef.current.clientWidth - 200) + 100
+          ),
+          backgroundColor: "rgb(190, 39, 39)"
+        };
+        setTargets(prevState => [
+          ...prevState,
+          {
+            target: "target" + nextId,
+            targStyle: targStyle,
+            id: nextId
+          }
+        ]);
+      }
+    }, 400);
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setDate(new Date().toLocaleTimeString());
-      playing && seconds > 0 && setSeconds(seconds - 1);
-    }, 1000);
-    if (seconds === 0) {
-      stopGame();
+    if (playing) {
+      let timer = setInterval(() => {
+        setSeconds(seconds => {
+          let newSeconds = seconds - 1;
+          if (newSeconds === 0 && playing) {
+            clearInterval(timer);
+            stopGame();
+          }
+          return newSeconds;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
     }
-  }, [date, seconds]);
+  }, [playing]);
 
   const stopGame = () => {
     setTargets([]);

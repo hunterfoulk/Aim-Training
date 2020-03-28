@@ -191,7 +191,7 @@
   justify-content: center;
   flex-wrap: wrap;
   width: 650px;
-  height: 250px;
+  height: 280px;
   left: 35%;
   top: 15%;
   border-radius: 2%;
@@ -262,6 +262,7 @@
   border-radius: 50px;
   width: 195px;
   height: 70px;
+  margin: 10px;
   background-color: rgb(192, 41, 41);
   border: 5px solid rgb(122, 30, 30);
   cursor: pointer;
