@@ -8,6 +8,7 @@ import axios from "axios";
 
 let gameTime = 20;
 export default function App() {
+  if (process.env.NODE_ENV !== "production") console.log = function() {};
   const [playing, inSession] = useState(false);
   const [targets, setTargets] = useState([]);
   const [seconds, setSeconds] = useState(gameTime);

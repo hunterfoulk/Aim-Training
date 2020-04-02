@@ -204,7 +204,6 @@
   top: 15%;
   border-radius: 2%;
   background-color: rgb(37, 36, 36);
-
   cursor: context-menu;
 }
 .boxes-container {
@@ -367,10 +366,48 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  background-color: rgb(202, 196, 196);
+  background-color: rgb(212, 207, 207);
   outline: none;
   font-size: 20px;
   text-align: center;
+}
+
+/* FOOTER */
+
+.footer-links {
+  position: absolute;
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  /* background-color: green; */
+  color: rgba(255, 255, 255, 0.876);
+  bottom: 0px;
+  align-self: flex-end;
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-family: "Segoe UI", sans-serif;
+}
+.footer-target {
+  color: rgb(192, 41, 41);
+  position: relative;
+  margin-right: 2px;
+  top: 3px;
+}
+.footer-links a {
+  background-color: rgb(141, 140, 140);
+  border: 1px solid rgb(141, 140, 140);
+  border-radius: 10%;
+  height: 39px;
+  margin-left: 65px;
+  cursor: pointer;
+  outline: none;
+}
+.footer-links a:hover {
+  background-color: rgb(160, 157, 157);
+  border: 1px solid rgb(160, 157, 157);
+}
+.footer-links img {
+  height: 35px;
 }
 @keyframes circleScale {
   0% {

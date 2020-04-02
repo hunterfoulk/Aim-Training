@@ -1,5 +1,6 @@
 import React from "react";
 import { FiTarget } from "react-icons/fi";
+import gitIcon from "./images/githubicon.png";
 
 const Homepage = ({ startGame, user, setName }) => {
   return (
@@ -29,6 +30,16 @@ const Homepage = ({ startGame, user, setName }) => {
               Start
             </button>
           </div>
+        </div>
+
+        <div className="footer-links">
+          <a href="https://github.com/hunterfoulk" target="_blank">
+            <img src={gitIcon}></img>
+          </a>
+          <span className="span-one">
+            Created by <FiTarget className="footer-target" />
+            <span className="span-two">Hunt</span>
+          </span>
         </div>
       </div>
     </>
