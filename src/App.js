@@ -6,7 +6,7 @@ import Header from "./Header";
 import _ from "lodash";
 import axios from "axios";
 
-let gameTime = 10;
+let gameTime = 20;
 export default function App() {
   const [playing, inSession] = useState(false);
   const [targets, setTargets] = useState([]);
