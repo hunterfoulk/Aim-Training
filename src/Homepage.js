@@ -17,6 +17,7 @@ const Homepage = ({ startGame, user, setName }) => {
             <form autoComplete="off" onSubmit={e => e.preventDefault()}>
               <input
                 autoFocus={true}
+                onfocus=""
                 id="name"
                 placeholder="Enter username..."
                 maxLength={8}
