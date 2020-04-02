@@ -23,7 +23,7 @@ export default function Leaderboard({ user, entry }) {
       <div className="leaderboard-main">
         <h1>LEADERBOARD</h1>
         <div className="scores-container">
-          {entries.map((set, i) => (
+          {entries.slice(0, 6).map((set, i) => (
             <div key={i} className="scores">
               <span>{set.name}</span>
               <div className="rows">

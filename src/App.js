@@ -38,6 +38,7 @@ export default function App() {
     setMisses(0);
     setHits(0);
     inSession(true);
+    setComponents({ ...components, leaderboard: false });
     let zeroId = 0;
     const gameTimer = setInterval(() => {
       let nextId = zeroId++;
