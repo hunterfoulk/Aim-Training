@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import Homepage from "./Homepage";
+import Leaderboard from "./Leaderboard";
 import "./Game.css";
 import Header from "./Header";
 import _ from "lodash";
+import axios from "axios";
 
 let gameTime = 10;
-
 export default function App() {
   const [playing, inSession] = useState(false);
   const [targets, setTargets] = useState([]);
@@ -14,6 +15,9 @@ export default function App() {
   const [endGame, setEndgame] = useState(false);
   const containerRef = useRef();
   const [misses, setMisses] = useState(0);
+  const [user, setUser] = useState({ name: "" });
+  const [entry, setEntry] = useState(false);
+  const [components, setComponents] = useState({ leaderboard: false });
 
   let timer = seconds;
   const hitsCounter = hits;
@@ -21,17 +25,20 @@ export default function App() {
 
   const accuracy = (hitsCounter / (missesCounter + hitsCounter)) * 100;
 
-  // const lowDif = 750;
-  // const medDif = 500;
-  // const hardDif = 250;
-
   const startGame = () => {
+    if (!user.name) {
+      try {
+      } catch (error) {
+        console.log(error);
+      }
+      return;
+    }
     setSeconds(gameTime);
     setEndgame(false);
-    let zeroId = 0;
     setMisses(0);
     setHits(0);
     inSession(true);
+    let zeroId = 0;
     const gameTimer = setInterval(() => {
       let nextId = zeroId++;
       let stop = false;
@@ -66,6 +73,8 @@ export default function App() {
   };
 
   useEffect(() => {
+    console.log("timer");
+
     if (playing) {
       let timer = setInterval(() => {
         setSeconds(seconds => {
@@ -80,6 +89,29 @@ export default function App() {
       return () => clearInterval(timer);
     }
   }, [playing]);
+
+  useEffect(() => {
+    if (endGame) {
+      console.log("hits:", hits);
+      console.log("misses:", misses);
+      console.log("accuracy:", accuracy);
+      const postToLeaderboard = async () => {
+        await axios
+          .post(process.env.REACT_APP_PROD_POST_URL, {
+            name: user.name,
+            hits: hits,
+            misses: misses,
+            accuracy: accuracy
+          })
+          .then(() => {
+            console.log("data sent to leaderboards");
+            setEntry(true);
+          })
+          .catch(error => console.log(error));
+      };
+      postToLeaderboard();
+    }
+  }, [endGame]);
 
   const stopGame = () => {
     setTargets([]);
@@ -100,12 +132,29 @@ export default function App() {
     console.log("misses:", misses);
   };
 
+  const setName = e => {
+    let name = e.target.value;
+    try {
+      setUser({ ...user, name: name.replace(/[^a-z]/gi, "").toLowerCase() });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toggleLeaderboard = () => {
+    setComponents({ ...components, leaderboard: !components.leaderboard });
+    setEntry(true);
+  };
+
   return (
     <>
-      <Header />
+      <Header toggleLeaderboard={toggleLeaderboard} endGame={endGame} />
+      {components.leaderboard && (
+        <Leaderboard user={user} components={components} entry={entry} />
+      )}
       {!playing && !endGame ? (
         <>
-          <Homepage startGame={startGame} />
+          <Homepage startGame={startGame} user={user} setName={setName} />
         </>
       ) : (
         <>

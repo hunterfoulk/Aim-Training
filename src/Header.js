@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./Game.css";
 import { FiTarget } from "react-icons/fi";
 import { FaHome } from "react-icons/fa";
 import { IoMdStats } from "react-icons/io";
 
-export default function Header() {
+export default function Header({ toggleLeaderboard, endGame }) {
   return (
     <div className="header">
       <div className="text-holder">
@@ -14,7 +13,7 @@ export default function Header() {
         <p>Aim-Training</p>
       </div>
       <div className="home-icons">
-        <IoMdStats className="stats" />
+        <IoMdStats className="stats" onClick={() => toggleLeaderboard()} />
         <a href="/">
           <FaHome className="home-button" />
         </a>
